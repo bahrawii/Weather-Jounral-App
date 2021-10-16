@@ -1,12 +1,12 @@
 /* Global Variables */
 const baseURL = "https://api.openweathermap.org/data/2.5/weather?zip=";
-const key = "&appid=1731763d663158ea57ed1e516d10bca2";
+const key = "&appid=1731763d663158ea57ed1e516d10bca2&units=metric";
 
 // api.openweathermap.org/data/2.5/weather?zip={zip code},{country code}&appid={API key}
 
 // Create a new date instance dynamically with JS
 let d = new Date();
-let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
+let newDate = d.getMonth()+1+'.'+ d.getDate()+'.'+ d.getFullYear();
 
 // Posts all data to client side.
 const postData = async (url = '', data = {}) => {
@@ -51,7 +51,7 @@ const updateUI = async() => {
     try {
         const receivedData = await request.json();
         document.querySelector("#date").innerHTML = `Today's date is ${receivedData.date}`;
-        document.querySelector("#temp").innerHTML = `The temperature is ${receivedData.temperature}`;
+        document.querySelector("#temp").innerHTML = `The temperature is ${receivedData.temperature} °C`;
         document.querySelector("#content").innerHTML = `Today I feel ${receivedData.feeling}`;
     }
     catch(error) {
@@ -76,7 +76,7 @@ function saveInput(e) {
         postData("/addData", {date:newDate, temperature:data.main.temp, feeling:feeling})
     })
     // Updates UI dynamically.
-    .then(updateUI())
+    .then(()=>updateUI())
 
 };
 
